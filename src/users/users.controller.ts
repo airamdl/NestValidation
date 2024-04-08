@@ -1,12 +1,15 @@
+// users.controller.ts
+
 import { Controller, Post, Body } from '@nestjs/common';
+import { UserService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
+  constructor(private readonly userService: UserService) {}
+
   @Post()
-  async createUser(@Body() dto: CreateUserDto) {
-    // At this point, "dto" has already been validated
-    // You can now proceed with processing and saving the user data
-    return 'User created successfully';
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    return this.userService.createUser(createUserDto);
   }
 }
